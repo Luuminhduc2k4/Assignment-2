@@ -1,0 +1,48 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Item {
+    string name;
+    int id;
+};
+
+int binarySearch(Item* arr, int size, int targetId) {
+    int left = 0, right = size - 1;
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        if (arr[mid].id == targetId) {
+            return mid;
+        } else if (arr[mid].id < targetId) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    return -1;
+}
+
+int main() {
+    int size = 3;
+
+    Item* items = new Item[size];
+
+    items[0] = {"Aerith", 101};
+    items[1] = {"Bob", 102};
+    items[2] = {"Cloud", 103};
+
+    int searchId;
+    cout << "Enter ID to search: ";
+    cin >> searchId;
+
+    int index = binarySearch(items, size, searchId);
+    if (index != -1) {
+        cout << "Found: " << items[index].name << " with ID " << items[index].id << endl;
+    } else {
+        cout << "Item with ID " << searchId << " not found." << endl;
+    }
+
+    delete[] items;
+
+    return 0;
+}
